@@ -1,0 +1,5 @@
+# Only the site itself is served; everything else stays private.
+.*
+README.md
+wrangler.jsonc
+node_modules
