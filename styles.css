@@ -87,6 +87,7 @@ button { font: inherit; color: inherit; }
   width: min(720px, 100%);
   margin: 0 auto;
   aspect-ratio: 1033 / 416;
+  pointer-events: none; /* the art's transparent edges mustn't cover the belt-loop coin */
 }
 .logo { margin: 0; }
 .logo__wordmark { display: block; width: 100%; height: auto; }
@@ -94,6 +95,7 @@ button { font: inherit; color: inherit; }
 
 .party-star {
   position: absolute;
+  pointer-events: auto;
   left: 42.79%;
   top: 0;
   width: 14.42%;
