@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pocket Giggles</title>
+  <meta name="description" content="Tiny games for kids, tucked into pockets. Reach in and play!">
+  <meta name="theme-color" content="#3a6db0">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Shared drawings. Pockets and capybaras are reused all over the page. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="twill" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect width="2" height="6" fill="rgba(255,255,255,.12)"/>
+      </pattern>
+
+      <symbol id="pocket-shape" viewBox="0 0 200 220">
+        <path class="pk-fabric" d="M8 12h184v150l-92 50-92-50z"/>
+        <path d="M8 12h184v150l-92 50-92-50z" fill="url(#twill)"/>
+        <path class="pk-shadow" d="M8 12h184v14H8z"/>
+        <path class="pk-stitch" d="M18 34h164v122l-82 44-82-44z"/>
+        <path class="pk-stitch" d="M8 26h184"/>
+        <path class="pk-stitch pk-arc" d="M44 120q28-30 56 0q28-30 56 0"/>
+        <circle class="pk-rivet" cx="14" cy="18" r="5"/>
+        <circle class="pk-rivet" cx="186" cy="18" r="5"/>
+      </symbol>
+
+      <!-- Capybara face, peeking out of a pocket -->
+      <symbol id="capy-face" viewBox="0 0 120 100">
+        <ellipse cx="26" cy="18" rx="9" ry="8" fill="#7a4a26"/>
+        <ellipse cx="94" cy="18" rx="9" ry="8" fill="#7a4a26"/>
+        <rect x="10" y="14" width="100" height="86" rx="38" fill="#a8703f"/>
+        <ellipse cx="60" cy="74" rx="34" ry="22" fill="#8b5a32"/>
+        <ellipse cx="48" cy="70" rx="3.5" ry="5" fill="#3b2414"/>
+        <ellipse cx="72" cy="70" rx="3.5" ry="5" fill="#3b2414"/>
+        <path d="M52 84q8 5 16 0" fill="none" stroke="#3b2414" stroke-width="3" stroke-linecap="round"/>
+        <ellipse cx="24" cy="58" rx="8" ry="5" fill="#ff9aa2" opacity=".55"/>
+        <ellipse cx="96" cy="58" rx="8" ry="5" fill="#ff9aa2" opacity=".55"/>
+        <g class="capy-eyes">
+          <circle cx="38" cy="44" r="6" fill="#2b1d14"/>
+          <circle cx="82" cy="44" r="6" fill="#2b1d14"/>
+          <circle cx="40" cy="42" r="2" fill="#fff"/>
+          <circle cx="84" cy="42" r="2" fill="#fff"/>
+        </g>
+      </symbol>
+
+      <!-- Capybara side view, for the parade -->
+      <symbol id="capy-walk" viewBox="0 0 150 100">
+        <g class="leg leg-a"><rect x="34" y="62" width="11" height="28" rx="5" fill="#7a4a26"/></g>
+        <g class="leg leg-b"><rect x="54" y="62" width="11" height="28" rx="5" fill="#7a4a26"/></g>
+        <g class="leg leg-a"><rect x="88" y="62" width="11" height="28" rx="5" fill="#7a4a26"/></g>
+        <g class="leg leg-b"><rect x="104" y="62" width="11" height="28" rx="5" fill="#7a4a26"/></g>
+        <ellipse cx="72" cy="54" rx="56" ry="30" fill="#a8703f"/>
+        <rect x="98" y="22" width="48" height="38" rx="16" fill="#a8703f"/>
+        <ellipse cx="108" cy="22" rx="7" ry="6" fill="#7a4a26"/>
+        <circle cx="122" cy="34" r="4" fill="#2b1d14"/>
+        <ellipse cx="141" cy="42" rx="2.5" ry="3.5" fill="#3b2414"/>
+        <ellipse cx="116" cy="46" rx="6" ry="4" fill="#ff9aa2" opacity=".55"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <header class="waistband">
+    <div class="stars" aria-hidden="true"></div>
+    <div class="belt-loops" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+    <button class="coin coin--hidden" data-coin="loop" aria-label="A shiny coin!"></button>
+
+    <button class="jeans-button" id="jeansButton" type="button" aria-label="The jeans button. What happens if you press it a lot?">
+      <span class="jeans-button__face">PG</span>
+    </button>
+    <h1 class="logo" id="logo">Pocket Giggles</h1>
+    <p class="tagline">Tiny games. Big giggles. <strong>Pick a pocket!</strong></p>
+  </header>
+
+  <main>
+    <section class="pockets" aria-label="Games">
+
+      <a class="pocket pocket--capy" id="capyPocket" href="https://capy.pocketgames.com" data-game="capy">
+        <span class="pocket__peek capy-peek" aria-hidden="true">
+          <svg class="capy-svg" viewBox="0 0 120 100"><use href="#capy-face"/></svg>
+          <span class="capy-yuzu">🍊</span>
+          <span class="capy-crown">👑</span>
+          <span class="capy-nightcap"></span>
+          <span class="capy-zzz">z<i>z</i><b>z</b></span>
+        </span>
+        <svg class="pocket__shape" viewBox="0 0 200 220" aria-hidden="true"><use href="#pocket-shape"/></svg>
+        <span class="pocket__paws" aria-hidden="true"><i></i><i></i></span>
+        <span class="patch">
+          <span class="patch__title">Capy</span>
+          <span class="patch__play">Play ▶</span>
+        </span>
+        <span class="speech" aria-hidden="true">psst… wanna play?</span>
+      </a>
+
+      <button class="pocket pocket--soon pocket--pink" type="button" aria-label="Mystery pocket: a new game is being sewn. Tap to rummage!">
+        <span class="pocket__peek mystery-peek" aria-hidden="true"><i></i><i></i></span>
+        <svg class="pocket__shape" viewBox="0 0 200 220" aria-hidden="true"><use href="#pocket-shape"/></svg>
+        <span class="patch patch--soon">
+          <span class="patch__title">???</span>
+          <span class="patch__play">Being sewn…</span>
+        </span>
+      </button>
+
+      <button class="pocket pocket--soon pocket--purple" type="button" aria-label="Mystery pocket: another game is being sewn. Tap to rummage!">
+        <span class="pocket__peek mystery-peek" aria-hidden="true"><i></i><i></i></span>
+        <svg class="pocket__shape" viewBox="0 0 200 220" aria-hidden="true"><use href="#pocket-shape"/></svg>
+        <span class="patch patch--soon">
+          <span class="patch__title">???</span>
+          <span class="patch__play">Being sewn…</span>
+        </span>
+      </button>
+
+    </section>
+
+    <p class="hint">Psst… some pockets have secrets. 🤫</p>
+  </main>
+
+  <footer class="hem">
+    <p>Sewn with giggles and one very chill <button type="button" class="capy-word" id="capyWord">capybara</button>.</p>
+    <p class="small">© <span id="year">2026</span> Pocket Giggles</p>
+    <button class="coin coin--hem" data-coin="hem" aria-label="A shiny coin!"></button>
+  </footer>
+
+  <div class="coin-counter" id="coinCounter" hidden aria-live="polite">
+    <span class="coin coin--icon" aria-hidden="true"></span>
+    <span><span id="coinCount">0</span>/5</span>
+  </div>
+
+  <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="true" aria-label="Sound on">🔊</button>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="fx" id="fx" aria-hidden="true"></div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

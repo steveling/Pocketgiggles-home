@@ -1,0 +1,652 @@
+/* =========================================================
+   Pocket Giggles — the whole page is a pair of jeans.
+   Waistband on top, pockets in the middle, hem at the bottom.
+   ========================================================= */
+
+:root {
+  --denim: #3a6db0;
+  --denim-dark: #2b5491;
+  --denim-deep: #1f3f70;
+  --thread: #ffc94a;
+  --ink: #2b1d14;
+  --cream: #fff8e7;
+  --leather: #b9773f;
+  --leather-dark: #8a5228;
+  --brass: #e7b54a;
+  --brass-dark: #a87a1f;
+  --toast-bg: #fff8e7;
+  --radius: 22px;
+  --font: "Fredoka", "Baloo 2", "Comic Sans MS", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font);
+  color: var(--cream);
+  background-color: var(--denim);
+  /* denim twill: two layers of diagonal lines + a soft vignette */
+  background-image:
+    radial-gradient(ellipse at 50% 30%, transparent 40%, rgba(0, 0, 0, .25) 100%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, .06) 0 2px, transparent 2px 6px),
+    repeating-linear-gradient(-45deg, rgba(0, 0, 0, .06) 0 1px, transparent 1px 9px);
+  overflow-x: hidden;
+  transition: background-color .8s ease;
+}
+
+button { font: inherit; color: inherit; }
+
+/* ---------- Waistband (header) ---------- */
+
+.waistband {
+  position: relative;
+  text-align: center;
+  padding: 56px 16px 40px;
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, .05) 0 2px, transparent 2px 6px),
+    var(--denim-dark);
+  border-bottom: 4px dashed var(--thread);
+  box-shadow: 0 10px 0 rgba(0, 0, 0, .15);
+}
+
+.waistband::before { /* top stitching */
+  content: "";
+  position: absolute;
+  inset: 12px 0 auto;
+  border-top: 4px dashed var(--thread);
+}
+
+.belt-loops {
+  position: absolute;
+  z-index: 1;
+  inset: 0 0 auto;
+  display: flex;
+  justify-content: space-around;
+  pointer-events: none;
+}
+.belt-loops span {
+  width: 26px;
+  height: 64px;
+  background: var(--denim);
+  border: 3px dashed var(--thread);
+  border-top: 0;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, .2);
+}
+
+.jeans-button {
+  position: relative;
+  z-index: 2;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 8px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  background: radial-gradient(circle at 35% 30%, #fff1b8, var(--brass) 45%, var(--brass-dark));
+  box-shadow: inset 0 0 0 6px rgba(0, 0, 0, .12), 0 6px 0 rgba(0, 0, 0, .25);
+  transition: transform .15s ease;
+}
+.jeans-button:hover { transform: rotate(-12deg) scale(1.05); }
+.jeans-button:active { transform: scale(.92); }
+.jeans-button__face {
+  font-weight: 700;
+  font-size: 22px;
+  color: #6d4c0f;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 0 #fff5cc;
+}
+.jeans-button.is-wobbly { animation: wobble .35s ease; }
+.jeans-button.is-popped { z-index: 60; animation: pop-off 2.4s cubic-bezier(.3, .6, .4, 1) forwards; }
+
+.logo {
+  margin: 0;
+  font-size: clamp(44px, 9vw, 92px);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--cream);
+  text-shadow:
+    0 4px 0 var(--denim-deep),
+    0 8px 0 rgba(0, 0, 0, .2);
+  cursor: default;
+  user-select: none;
+}
+.logo .letter {
+  display: inline-block;
+  transition: transform .2s ease, color .2s ease;
+}
+.logo .letter:hover { transform: translateY(-8px) rotate(-6deg); color: var(--thread); }
+.logo .space { display: inline-block; width: .3em; }
+.giggling .logo .letter { animation: giggle .4s ease-in-out infinite alternate; }
+
+.tagline {
+  margin: 14px 0 0;
+  font-size: clamp(18px, 3vw, 24px);
+  opacity: .95;
+}
+.tagline strong { color: var(--thread); }
+
+/* stars only come out at night */
+.stars { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 1s; }
+.stars i {
+  position: absolute;
+  width: 4px; height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #fff;
+  animation: twinkle 2s ease-in-out infinite alternate;
+}
+
+/* ---------- Pockets ---------- */
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 48px 16px 24px;
+}
+
+.pockets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 40px 32px;
+  justify-items: center;
+}
+
+.pocket {
+  --fabric: #2ec4b6;
+  --pk-thread: #ffd166;
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 290px;
+  aspect-ratio: 200 / 290;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--ink);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .25s cubic-bezier(.3, 1.6, .5, 1);
+}
+.pocket:hover, .pocket:focus-visible { transform: translateY(-6px) rotate(-1.5deg); }
+.pocket:nth-child(even):hover, .pocket:nth-child(even):focus-visible { transform: translateY(-6px) rotate(1.5deg); }
+.pocket:active { transform: scale(.96); }
+.pocket:focus-visible { outline: none; }
+.pocket:focus-visible .pocket__shape { filter: drop-shadow(0 0 0 #fff) drop-shadow(0 0 8px #fff); }
+
+.pocket--pink   { --fabric: #ff6fae; --pk-thread: #fff3a8; }
+.pocket--purple { --fabric: #8b6cf0; --pk-thread: #b6f7d6; }
+
+.pocket__shape {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 24.14%; /* 70 / 290 */
+  width: 100%;
+  height: 75.86%;
+  overflow: visible;
+  filter: drop-shadow(0 8px 0 rgba(0, 0, 0, .22));
+}
+
+/* these classes live inside the <symbol>, styled through <use> */
+.pk-fabric { fill: var(--fabric); }
+.pk-shadow { fill: rgba(0, 0, 0, .12); }
+.pk-stitch {
+  fill: none;
+  stroke: var(--pk-thread);
+  stroke-width: 3.5;
+  stroke-dasharray: 9 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.pk-arc { stroke-width: 3; opacity: .85; }
+.pk-rivet { fill: var(--brass); stroke: var(--brass-dark); stroke-width: 2; }
+
+/* the thing peeking out of the pocket sits *behind* the pocket front */
+.pocket__peek {
+  position: absolute;
+  z-index: 1;
+  left: 22%;
+  width: 56%;
+  top: 6%;
+  transition: transform .35s cubic-bezier(.3, 1.6, .5, 1);
+}
+.capy-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.capy-eyes { animation: blink 5s infinite; transform-origin: 50% 44%; transform-box: fill-box; }
+
+.pocket--capy:hover .capy-peek,
+.pocket--capy:focus-visible .capy-peek,
+.pocket--capy.is-calling .capy-peek { transform: translateY(-22%); }
+
+/* little paws hooked over the pocket rim */
+.pocket__paws {
+  position: absolute;
+  z-index: 3;
+  left: 0; right: 0;
+  top: 26.5%;
+  display: flex;
+  justify-content: center;
+  gap: 22%;
+  pointer-events: none;
+  transition: transform .35s cubic-bezier(.3, 1.6, .5, 1);
+}
+.pocket__paws i {
+  width: 14%;
+  aspect-ratio: 1.5;
+  background: #8b5a32;
+  border-radius: 50% 50% 40% 40%;
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, .15);
+}
+.pocket--capy:hover .pocket__paws { transform: translateY(-4px); }
+
+/* extras the capy wears for Easter eggs */
+.capy-yuzu, .capy-crown, .capy-nightcap, .capy-zzz {
+  position: absolute;
+  left: 50%;
+  top: -14%;
+  transform: translate(-50%, 20px) scale(.2);
+  opacity: 0;
+  transition: transform .45s cubic-bezier(.3, 1.8, .5, 1), opacity .3s;
+  pointer-events: none;
+  font-size: clamp(26px, 4vw, 36px);
+  line-height: 1;
+}
+.has-yuzu .capy-yuzu,
+.golden .capy-crown { opacity: 1; transform: translate(-50%, 0) scale(1); }
+.golden.has-yuzu .capy-yuzu { transform: translate(-115%, 6px) scale(.8); }
+
+.capy-nightcap {
+  top: -10%;
+  left: 62%;
+  width: 46%;
+  aspect-ratio: 1.2;
+  background: linear-gradient(135deg, #5b6cff 0 50%, #ff6fae 50%);
+  background-size: 18px 18px;
+  clip-path: polygon(0 100%, 100% 100%, 70% 0);
+  border-radius: 6px;
+}
+.capy-nightcap::after { content: none; }
+.night .capy-nightcap { opacity: 1; transform: translate(-50%, 0) rotate(18deg) scale(1); }
+.night.golden .capy-nightcap { opacity: 0; }
+
+.capy-zzz {
+  left: 100%;
+  top: -6%;
+  font-weight: 700;
+  color: var(--cream);
+  font-size: 22px;
+  white-space: nowrap;
+}
+.capy-zzz i, .capy-zzz b { font-style: normal; display: inline-block; }
+.capy-zzz i { font-size: 1.2em; transform: translateY(-8px); }
+.capy-zzz b { font-size: 1.45em; transform: translateY(-18px); }
+.night .capy-zzz { opacity: 1; transform: none; animation: float-z 2.4s ease-in-out infinite; }
+.night .capy-eyes { animation: none; transform: scaleY(.12); }
+.night .pocket--capy:hover .capy-eyes { transform: none; }
+
+/* mystery eyes, glowing out of the dark */
+.mystery-peek {
+  top: 18%;
+  left: 18%;
+  width: 64%;
+  height: 12%;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background: radial-gradient(ellipse at 50% 100%, #120a1f 50%, #241539 80%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18%;
+  padding-top: 4%;
+}
+.mystery-peek i {
+  width: 11%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #fff7a8;
+  box-shadow: 0 0 10px #fff7a8, 0 0 20px rgba(255, 247, 168, .5);
+  animation: blink 4s infinite;
+}
+.pocket--purple .mystery-peek i { background: #b6f7d6; box-shadow: 0 0 10px #b6f7d6; animation-delay: 1.3s; }
+.pocket--soon:hover .mystery-peek i { transform: translateX(-30%); transition: transform .3s; }
+.pocket--soon.is-rummaging { animation: rummage .5s ease; }
+.pocket--soon.is-rummaging .mystery-peek i { animation: none; transform: scaleY(.1); }
+
+/* leather patch with the game's name */
+.patch {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 46%;
+  transform: translateX(-50%) rotate(-3deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 56%;
+  padding: 10px 18px 12px;
+  background: linear-gradient(var(--leather), var(--leather-dark));
+  border-radius: 12px;
+  outline: 3px dashed rgba(255, 233, 196, .7);
+  outline-offset: -8px;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, .25);
+  color: #fff3dc;
+  pointer-events: none;
+}
+.patch__title {
+  font-size: clamp(28px, 4.5vw, 38px);
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, .3);
+}
+.patch__play {
+  font-size: 15px;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: var(--thread);
+  color: var(--ink);
+  white-space: nowrap;
+}
+.pocket:hover .patch__play { animation: bounce .5s ease infinite alternate; }
+.patch--soon { background: linear-gradient(#6a5a7d, #4b3e5c); transform: translateX(-50%) rotate(3deg); }
+.patch--soon .patch__play { background: rgba(255, 255, 255, .85); }
+.pocket:hover .patch--soon .patch__play { animation: none; }
+
+/* the capy's speech bubble (idle Easter egg) */
+.speech {
+  position: absolute;
+  z-index: 4;
+  top: -4%;
+  right: -8%;
+  padding: 8px 14px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, .2);
+  white-space: nowrap;
+  opacity: 0;
+  transform: scale(.4) translateY(10px);
+  transform-origin: 0 100%;
+  transition: opacity .25s, transform .35s cubic-bezier(.3, 1.8, .5, 1);
+  pointer-events: none;
+}
+.speech::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  bottom: -9px;
+  border: 10px solid transparent;
+  border-top-color: #fff;
+  border-bottom: 0;
+}
+.is-calling .speech { opacity: 1; transform: none; }
+
+.hint {
+  margin: 44px 0 0;
+  text-align: center;
+  font-size: 18px;
+  opacity: .8;
+}
+
+/* ---------- Hem (footer) ---------- */
+
+.hem {
+  position: relative;
+  padding: 28px 16px 36px;
+  text-align: center;
+  background: var(--denim-dark);
+  border-top: 4px dashed var(--thread);
+  font-size: 17px;
+}
+.hem::after { /* the folded cuff */
+  content: "";
+  position: absolute;
+  inset: auto 0 10px;
+  border-top: 4px dashed var(--thread);
+  opacity: .6;
+}
+.hem p { margin: 4px 0; }
+.hem .small { font-size: 14px; opacity: .75; }
+.capy-word {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: var(--thread);
+  font-weight: 600;
+  text-decoration: underline wavy;
+  text-underline-offset: 4px;
+}
+.capy-word:hover { animation: giggle .25s ease-in-out infinite alternate; }
+
+/* ---------- Coins (collect all 5!) ---------- */
+
+.coin {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  background: radial-gradient(circle at 35% 30%, #fff6c4, #ffcf3f 45%, #c98f0b);
+  box-shadow: inset 0 0 0 3px rgba(150, 100, 0, .35), 0 3px 0 rgba(0, 0, 0, .25);
+  position: relative;
+}
+.coin::after {
+  content: "★";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  color: #9a6b00;
+}
+.coin:hover { animation: spin-coin .6s linear infinite; }
+.coin.is-found { animation: collect .6s ease forwards; pointer-events: none; }
+
+/* tucked behind the 3rd belt loop, only an edge sticks out */
+.coin--hidden { position: absolute; top: 46px; left: calc(62.5% - 4px); z-index: 0; transform: scale(.8); }
+.coin--hem { position: absolute; right: 18px; bottom: 16px; transform: scale(.7); opacity: .85; }
+.coin--loose { position: fixed; z-index: 60; }
+.coin--icon { display: inline-block; width: 22px; height: 22px; cursor: default; }
+.coin--icon::after { font-size: 11px; }
+
+.coin-counter {
+  position: fixed;
+  z-index: 50;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--toast-bg);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 18px;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, .25);
+}
+.coin-counter[hidden] { display: none; }
+.coin-counter.is-bumped { animation: bump .4s ease; }
+
+/* ---------- Sound + toast ---------- */
+
+.sound-toggle {
+  position: fixed;
+  z-index: 50;
+  left: 14px;
+  bottom: 14px;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 22px;
+  background: var(--toast-bg);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, .25);
+}
+.sound-toggle:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0, 0, 0, .25); }
+
+.toast {
+  position: fixed;
+  z-index: 70;
+  left: 50%;
+  bottom: 24px;
+  max-width: calc(100vw - 32px);
+  padding: 14px 22px;
+  border-radius: 18px;
+  background: var(--toast-bg);
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, .25);
+  transform: translate(-50%, calc(100% + 40px));
+  visibility: hidden;
+  transition: transform .35s cubic-bezier(.3, 1.5, .5, 1), visibility 0s .35s;
+  pointer-events: none;
+}
+.toast.is-showing { transform: translate(-50%, 0); visibility: visible; transition-delay: 0s; }
+.toast .big { font-size: 30px; vertical-align: middle; margin-right: 6px; }
+
+/* ---------- Effects layer: parade, confetti, flying buttons ---------- */
+
+.fx { position: fixed; inset: 0; z-index: 40; pointer-events: none; overflow: hidden; }
+
+.parade-capy {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  width: 120px;
+  animation: walk-across var(--dur, 9s) linear forwards;
+}
+.parade-capy svg { display: block; width: 100%; height: auto; animation: bob .4s ease-in-out infinite alternate; }
+.parade-capy .leg { transform-box: fill-box; transform-origin: 50% 0; }
+.parade-capy .leg-a { animation: step .4s ease-in-out infinite alternate; }
+.parade-capy .leg-b { animation: step .4s ease-in-out infinite alternate-reverse; }
+.parade-capy .rider {
+  position: absolute;
+  left: 30%;
+  top: -18px;
+  font-size: 28px;
+}
+
+.confetti {
+  position: absolute;
+  top: -20px;
+  width: 10px;
+  height: 16px;
+  border-radius: 3px;
+  animation: fall var(--dur, 3s) linear forwards;
+}
+
+.flying-button {
+  position: fixed;
+  z-index: 45;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff1b8, var(--brass) 45%, var(--brass-dark));
+  pointer-events: none;
+}
+
+/* ---------- Modes ---------- */
+
+/* night time (8pm–6am, or ?night) */
+body.night { --denim: #1d3461; --denim-dark: #142648; --denim-deep: #0a1730; }
+.night .stars { opacity: 1; }
+.night .mystery-peek i { box-shadow: 0 0 14px currentColor, 0 0 32px #fff7a8; }
+
+/* giggle mode: everything wiggles */
+.giggling .pocket { animation: giggle .3s ease-in-out infinite alternate; }
+.giggling .pocket:nth-child(even) { animation-delay: .15s; }
+
+/* disco mode (Konami code) */
+.disco .pocket__shape { animation: disco 1.2s linear infinite; }
+.disco .waistband { animation: disco 2.4s linear infinite; }
+
+/* golden pocket: you found every coin */
+.golden { --thread: #ffe066; }
+.golden .pocket { --pk-thread: #ffe066; }
+.golden .pk-stitch { stroke-width: 4.5; filter: drop-shadow(0 0 3px #fff3a8); }
+.golden .logo { color: #ffe9a0; }
+
+/* ---------- Keyframes ---------- */
+
+@keyframes blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(.1); }
+}
+@keyframes giggle {
+  from { transform: rotate(-4deg) translateY(0); }
+  to   { transform: rotate(4deg) translateY(-4px); }
+}
+@keyframes wobble {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-18deg) scale(1.08); }
+  75% { transform: rotate(14deg); }
+}
+@keyframes pop-off {
+  0%   { transform: none; }
+  15%  { transform: translate(var(--pop-x, 120px), -50px) rotate(200deg); }
+  40%  { transform: translate(calc(var(--pop-x, 120px) * 1.8), 380px) rotate(520deg); opacity: 1; }
+  55%  { opacity: 0; }
+  80%  { transform: translate(0, -40px) scale(.2); opacity: 0; }
+  100% { transform: none; opacity: 1; }
+}
+@keyframes bounce { to { transform: translateY(-3px); } }
+@keyframes rummage {
+  0%, 100% { transform: none; }
+  20% { transform: rotate(-4deg) translateX(-6px); }
+  40% { transform: rotate(4deg) translateX(6px); }
+  60% { transform: rotate(-3deg) translateY(-6px); }
+  80% { transform: rotate(2deg); }
+}
+@keyframes twinkle { from { opacity: .2; transform: scale(.6); } to { opacity: 1; transform: scale(1.1); } }
+@keyframes float-z { 50% { transform: translateY(-6px); } }
+@keyframes spin-coin { 50% { transform: scaleX(.15); } }
+@keyframes collect {
+  40% { transform: translateY(-30px) scale(1.5); opacity: 1; }
+  100% { transform: translateY(-60px) scale(.2); opacity: 0; }
+}
+@keyframes bump { 50% { transform: scale(1.25); } }
+@keyframes walk-across {
+  from { transform: translateX(-160px); }
+  to   { transform: translateX(calc(100vw + 40px)); }
+}
+@keyframes bob { to { transform: translateY(-4px); } }
+@keyframes step { from { transform: rotate(-18deg); } to { transform: rotate(18deg); } }
+@keyframes fall {
+  to { transform: translate(var(--drift, 0), 110vh) rotate(var(--spin, 720deg)); }
+}
+@keyframes disco { to { filter: hue-rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .waistband { padding-top: 48px; }
+  .belt-loops span { height: 52px; }
+  .jeans-button { width: 64px; height: 64px; }
+  .speech { right: 0; font-size: 14px; }
+  .pockets { gap: 48px; }
+  .pocket { max-width: 260px; }
+}
