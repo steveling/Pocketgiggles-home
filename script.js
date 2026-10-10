@@ -2,7 +2,7 @@
  *
  * Easter eggs (shh!):
  *   1. Coin hunt — 5 hidden coins. Find them all for the Golden Pocket.
- *   2. Click the brass jeans button 5 times… it pops off!
+ *   2. Poke the party star on the logo 5 times… it pops off!
  *   3. Rummage in the mystery pockets to find pocket lint.
  *   4. Type "capy" (or tap "capybara" in the footer) for a capybara parade.
  *   5. Type "giggle" and everything giggles.
@@ -96,18 +96,6 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toastEl.classList.remove("is-showing"), ms);
   }
-
-  /* ---------- Logo letters (so they can giggle one by one) ---------- */
-
-  const logo = $("#logo");
-  const label = logo.textContent;
-  logo.setAttribute("aria-label", label);
-  logo.innerHTML = [...label]
-    .map((ch, i) => ch === " "
-      ? '<span class="space" aria-hidden="true"> </span>'
-      : `<span class="letter" aria-hidden="true" style="animation-delay:${i * -0.07}s">${ch}</span>`)
-    .join("");
-  $$(".letter", logo).forEach((l) => l.addEventListener("mouseenter", () => tone(rand(500, 900), 0, 0.06, "sine", 0.05)));
 
   /* ---------- Night time ---------- */
 
@@ -219,34 +207,35 @@
     }
   }
 
-  /* ---------- The jeans button pops off ---------- */
+  /* ---------- The party star pops off ---------- */
 
-  const jeansBtn = $("#jeansButton");
+  const star = $("#partyStar");
   let btnClicks = 0;
   let btnTimer;
-  jeansBtn.addEventListener("click", () => {
-    if (jeansBtn.classList.contains("is-popped")) return;
+  star.addEventListener("click", () => {
+    if (star.classList.contains("is-popped")) return;
     btnClicks++;
     clearTimeout(btnTimer);
     btnTimer = setTimeout(() => { btnClicks = 0; }, 1500);
 
     if (btnClicks < 5) {
       sfx.pop();
-      jeansBtn.classList.remove("is-wobbly");
-      void jeansBtn.offsetWidth;
-      jeansBtn.classList.add("is-wobbly");
-      if (btnClicks === 3) toast("Careful… it's getting loose! 😬", 1600);
+      star.classList.remove("is-wobbly");
+      void star.offsetWidth;
+      star.classList.add("is-wobbly");
+      if (btnClicks === 3) toast("Careful… the star is getting dizzy! 😵‍💫", 1600);
       return;
     }
 
     btnClicks = 0;
     sfx.boing();
-    jeansBtn.style.setProperty("--pop-x", (Math.random() < 0.5 ? -1 : 1) * rand(100, 180) + "px");
-    jeansBtn.classList.add("is-popped");
-    toast('<span class="big">😱</span>POP! The button flew off! Good thing these pants have a belt.', 3200);
-    const r = jeansBtn.getBoundingClientRect();
+    star.style.setProperty("--pop-x", (Math.random() < 0.5 ? -1 : 1) * rand(100, 180) + "px");
+    star.classList.add("is-popped");
+    toast('<span class="big">🤩</span>BOING! The star bounced off! It\'ll be right back.', 3200);
+    const r = star.getBoundingClientRect();
+    // coin id stays "button" so earlier finds still count
     setTimeout(() => dropCoin("button", r.left + r.width / 2 - 14, r.top + r.height + 16), 350);
-    jeansBtn.addEventListener("animationend", () => jeansBtn.classList.remove("is-popped"), { once: true });
+    star.addEventListener("animationend", () => star.classList.remove("is-popped"), { once: true });
   });
 
   /* ---------- Mystery pockets: rummage for pocket lint ---------- */
