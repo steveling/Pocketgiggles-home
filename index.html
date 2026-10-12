@@ -102,14 +102,28 @@
         <span class="speech" aria-hidden="true">psst… wanna play?</span>
       </a>
 
-      <button class="pocket pocket--soon pocket--pink" type="button" aria-label="Mystery pocket: a new game is being sewn. Tap to rummage!">
-        <span class="pocket__peek mystery-peek" aria-hidden="true"><i></i><i></i></span>
-        <svg class="pocket__shape" viewBox="0 0 200 220" aria-hidden="true"><use href="#pocket-shape"/></svg>
-        <span class="patch patch--soon">
-          <span class="patch__title">???</span>
-          <span class="patch__play">Being sewn…</span>
+      <a class="pocket pocket--zoom" href="https://zoom.pocketgiggles.com" data-game="zoom">
+        <span class="pocket__peek zoom-peek" aria-hidden="true">
+          <svg class="zoom-svg" viewBox="0 0 120 100">
+            <!-- Race car, nose first, peeking out of a pocket -->
+            <rect x="14" y="58" width="18" height="30" rx="5" fill="#15171c"/>
+            <rect x="88" y="58" width="18" height="30" rx="5" fill="#15171c"/>
+            <rect x="8" y="22" width="104" height="12" rx="4" fill="#8e1f22"/>
+            <path d="M30 34h60l10 30v26H20V64z" fill="#e5383b"/>
+            <path d="M40 40h40l6 18H34z" fill="#1e2a3a"/>
+            <path d="M44 43h32l3 8H41z" fill="#8fd0ff"/>
+            <circle cx="60" cy="76" r="10" fill="#fbfaf3" stroke="#1b2130" stroke-width="2.5"/>
+            <text x="60" y="81" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="13" fill="#1b2130">5</text>
+            <circle class="zoom-light" cx="32" cy="72" r="5" fill="#fff3a8"/>
+            <circle class="zoom-light" cx="88" cy="72" r="5" fill="#fff3a8"/>
+          </svg>
         </span>
-      </button>
+        <svg class="pocket__shape" viewBox="0 0 200 220" aria-hidden="true"><use href="#pocket-shape"/></svg>
+        <span class="patch">
+          <span class="patch__title">Zoom Garage</span>
+          <span class="patch__play">Play ▶</span>
+        </span>
+      </a>
 
       <button class="pocket pocket--soon pocket--purple" type="button" aria-label="Mystery pocket: another game is being sewn. Tap to rummage!">
         <span class="pocket__peek mystery-peek" aria-hidden="true"><i></i><i></i></span>

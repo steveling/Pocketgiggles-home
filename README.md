@@ -8,7 +8,7 @@ Open `index.html` in a browser, or serve the folder from any static host.
 ## Adding a game
 
 Copy the `pocket--capy` `<a>` in `index.html`, change the `href`, the patch title, and
-`--fabric` / `--pk-thread` colors (see `.pocket--pink` in `styles.css`). Swap it in for one
+`--fabric` / `--pk-thread` colors (see `.pocket--zoom` in `styles.css`). Swap it in for one
 of the `pocket--soon` mystery pockets.
 
 ## Secrets 🤫

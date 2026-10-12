@@ -166,6 +166,7 @@ main {
 
 .pocket--pink   { --fabric: #ff6fae; --pk-thread: #fff3a8; }
 .pocket--purple { --fabric: #8b6cf0; --pk-thread: #b6f7d6; }
+.pocket--zoom   { --fabric: #3a4048; --pk-thread: #ffc93c; }
 
 .pocket__shape {
   position: absolute;
@@ -628,4 +629,16 @@ body.night { --denim: #1d3461; --denim-dark: #142648; --denim-deep: #0a1730; }
   .speech { right: 0; font-size: 14px; }
   .pockets { gap: 48px; }
   .pocket { max-width: 260px; }
+}
+
+/* Zoom Garage: a race car peeking out, headlights on when you hover */
+.zoom-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.zoom-peek { top: 4%; }
+.pocket--zoom:hover .zoom-peek,
+.pocket--zoom:focus-visible .zoom-peek { transform: translateY(-18%); }
+.zoom-light { transition: filter .3s; }
+.pocket--zoom:hover .zoom-light,
+.pocket--zoom:focus-visible .zoom-light { filter: drop-shadow(0 0 6px #fff3a8); }
+@media (prefers-reduced-motion: reduce) {
+  .pocket--zoom:hover .zoom-peek, .pocket--zoom:focus-visible .zoom-peek { transform: none; }
 }
