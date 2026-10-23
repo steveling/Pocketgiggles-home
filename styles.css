@@ -167,6 +167,7 @@ main {
 .pocket--pink   { --fabric: #ff6fae; --pk-thread: #fff3a8; }
 .pocket--purple { --fabric: #8b6cf0; --pk-thread: #b6f7d6; }
 .pocket--zoom   { --fabric: #3a4048; --pk-thread: #ffc93c; }
+.pocket--chess  { --fabric: #7fb069; --pk-thread: #fff5df; }
 
 .pocket__shape {
   position: absolute;
@@ -641,4 +642,16 @@ body.night { --denim: #1d3461; --denim-dark: #142648; --denim-deep: #0a1730; }
 .pocket--zoom:focus-visible .zoom-light { filter: drop-shadow(0 0 6px #fff3a8); }
 @media (prefers-reduced-motion: reduce) {
   .pocket--zoom:hover .zoom-peek, .pocket--zoom:focus-visible .zoom-peek { transform: none; }
+}
+
+/* Chess Pals: a king and his pawn pal peeking out; the king pops up and tips his crown on hover */
+.chess-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chess-peek { top: -3%; }
+.pocket--chess:hover .chess-peek,
+.pocket--chess:focus-visible .chess-peek { transform: translateY(-16%); }
+.chess-crown { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .3s; }
+.pocket--chess:hover .chess-crown,
+.pocket--chess:focus-visible .chess-crown { transform: rotate(-8deg); }
+@media (prefers-reduced-motion: reduce) {
+  .pocket--chess:hover .chess-peek, .pocket--chess:focus-visible .chess-peek { transform: none; }
 }
